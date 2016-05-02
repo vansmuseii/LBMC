@@ -8,7 +8,7 @@
  *      date last modified: 05/04/2016
  *
  *      purpose: This program is to demonstrate how to use the LWGJL
- *              to move a cube.
+ *              to move a cube. Wheeeeeeee
  *
  **********************************************************************
  */
