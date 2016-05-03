@@ -150,6 +150,16 @@ lPosition.z = 0f;
             if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                 camera.moveDown(movementSpeed);
             }
+            if (Mouse.isButtonDown(0) || Mouse.isButtonDown(1)){
+                if(dy < 0)
+                    camera.pitch(dy);
+                if(dy > 0)
+                    camera.pitch(dy);
+                if(dx < 0)
+                    camera.yaw(dx);
+                if(dx > 0)
+                    camera.yaw(dx);               
+            }
 
             //set the modelview matrix back to the identity
             glLoadIdentity();
