@@ -1,10 +1,10 @@
 /**
  * *********************************************************************
- *      file: FPVCamera.java
+ *      file: Vector3Float.java
  *      author: Frank Lapena, Chun Ho, Van Muse
  *      class: CS 445 - Computer Graphics
  *
- *      assignment: Program 2
+ *      assignment: Quarter Project CP#1
  *      date last modified: 05/04/2016
  *
  *      purpose: This program is to demonstrate how to use the LWGJL
@@ -14,10 +14,6 @@
  */
 package cubes;
 
-/**
- *
- * @author VANSKEES
- */
 public class Vector3Float {
 
     public float x, y, z;
