@@ -23,26 +23,22 @@ import org.lwjgl.Sys;
 
 public class FPCameraController {
 
-private Vector3Float position = null;
-private Vector3Float lPosition = null;
-//the rotation around the Y axis of the camera
-private float yaw = 0.0f;
-//the rotation around the X axis of the camera
-private float pitch = 0.0f;
-private Vector3Float me;
+    private Vector3Float position = null;
+    private Vector3Float lPosition = null;
+    //the rotation around the Y axis of the camera
+    private float yaw = 0.0f;
+    //the rotation around the X axis of the camera
+    private float pitch = 0.0f;
+    private Vector3Float me;
 
-public FPCameraController(float x, float y, float z)
-{
-//instantiate position Vector3f to the x y z params.
-position = new Vector3Float(x, y, z);
-lPosition = new Vector3Float(x,y,z);
-lPosition.x = 0f;
-lPosition.y = 15f;
-lPosition.z = 0f;
-}
-
-
-   
+    public FPCameraController(float x, float y, float z) {
+        //instantiate position Vector3f to the x y z params.
+        position = new Vector3Float(x, y, z);
+        lPosition = new Vector3Float(x, y, z);
+        lPosition.x = 0f;
+        lPosition.y = 15f;
+        lPosition.z = 0f;
+    }
 
     public void yaw(float amount) {
         //increment the yaw by the amount param
@@ -86,7 +82,7 @@ lPosition.z = 0f;
     public void moveUp(float distance) {
         position.y -= distance;
     }
-//moves the camera down
+        //moves the camera down
 
     public void moveDown(float distance) {
         position.y += distance;
@@ -150,15 +146,19 @@ lPosition.z = 0f;
             if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                 camera.moveDown(movementSpeed);
             }
-            if (Mouse.isButtonDown(0) || Mouse.isButtonDown(1)){
-                if(dy < 0)
+            if (Mouse.isButtonDown(0) || Mouse.isButtonDown(1)) {
+                if (dy < 0) {
                     camera.pitch(dy);
-                if(dy > 0)
+                }
+                if (dy > 0) {
                     camera.pitch(dy);
-                if(dx < 0)
+                }
+                if (dx < 0) {
                     camera.yaw(dx);
-                if(dx > 0)
-                    camera.yaw(dx);               
+                }
+                if (dx > 0) {
+                    camera.yaw(dx);
+                }
             }
 
             //set the modelview matrix back to the identity
@@ -227,7 +227,8 @@ lPosition.z = 0f;
             glVertex3f(1.0f, -1.0f, -1.0f);
             glEnd();
 
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     public void side(float length, int side) {
