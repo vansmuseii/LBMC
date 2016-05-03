@@ -16,8 +16,8 @@ import org.lwjgl.Sys;
  * @author francis
  */
 public class FPCameraController {
-private Vector3f position = null;
-private Vector3f lPosition = null;
+private Vector3Float position = null;
+private Vector3Float lPosition = null;
 //the rotation around the Y axis of the camera
 private float yaw = 0.0f;
 //the rotation around the X axis of the camera
@@ -27,8 +27,8 @@ private Vector3Float me;
 public FPCameraController(float x, float y, float z)
 {
 //instantiate position Vector3f to the x y z params.
-position = new Vector3f(x, y, z);
-lPosition = new Vector3f(x,y,z);
+position = new Vector3Float(x, y, z);
+lPosition = new Vector3Float(x,y,z);
 lPosition.x = 0f;
 lPosition.y = 15f;
 lPosition.z = 0f;
