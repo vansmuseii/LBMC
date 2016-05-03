@@ -143,7 +143,7 @@ public class FPCameraController {
             {
                 camera.moveUp(movementSpeed);
             }
-            if (Keyboard.isKeyDown(Keyboard.KEY_E)) {
+            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                 camera.moveDown(movementSpeed);
             }
 
@@ -216,46 +216,46 @@ public class FPCameraController {
         } catch (Exception e) {}
     }
 
-    public void side(float lenght, int side) {
+    public void side(float length, int side) {
         switch (side) {
             //top
             case 0:
                 glColor3f(1.0f, 1.0f, 1.0f);
 
-                glVertex3f(lenght / 2, lenght / 2, -lenght / 2);
-                glVertex3f(-lenght / 2, lenght / 2, -lenght / 2);
-                glVertex3f(-lenght / 2, lenght / 2, lenght / 2);
-                glVertex3f(lenght / 2, lenght / 2, lenght / 2);
+                glVertex3f(length / 2, length / 2, -length / 2);
+                glVertex3f(-length / 2, length / 2, -length / 2);
+                glVertex3f(-length / 2, length / 2, length / 2);
+                glVertex3f(length / 2, length / 2, length / 2);
 
                 break;
             //bottom
             case 1:
                 glColor3f(0.0f, 0.0f, 1.0f);
 
-                glVertex3f(lenght / 2, -lenght / 2, lenght / 2);
-                glVertex3f(-lenght / 2, -lenght / 2, lenght / 2);
-                glVertex3f(-lenght / 2, -lenght / 2, -lenght / 2);
-                glVertex3f(lenght / 2, -lenght / 2, -lenght / 2);
+                glVertex3f(length / 2, -length / 2, length / 2);
+                glVertex3f(-length / 2, -length / 2, length / 2);
+                glVertex3f(-length / 2, -length / 2, -length / 2);
+                glVertex3f(length / 2, -length / 2, -length / 2);
 
                 break;
             //front
             case 2:
                 glColor3f(0.0f, 1.0f, 0.0f);
 
-                glVertex3f(lenght / 2, lenght / 2, lenght / 2);
-                glVertex3f(-lenght / 2, lenght / 2, lenght / 2);
-                glVertex3f(-lenght / 2, -lenght / 2, lenght / 2);
-                glVertex3f(lenght / 2, -lenght / 2, lenght / 2);
+                glVertex3f(length / 2, length / 2, length / 2);
+                glVertex3f(-length / 2, length / 2, length / 2);
+                glVertex3f(-length / 2, -length / 2, length / 2);
+                glVertex3f(length / 2, -length / 2, length / 2);
 
                 break;
             // back   
             case 3:
                 glColor3f(0.0f, 1.0f, 1.0f);
 
-                glVertex3f(lenght / 2, -lenght / 2, -lenght / 2);
-                glVertex3f(-lenght / 2, -lenght / 2, -lenght / 2);
-                glVertex3f(-lenght / 2, lenght / 2, -lenght / 2);
-                glVertex3f(lenght / 2, lenght / 2, -lenght / 2);
+                glVertex3f(length / 2, -length / 2, -length / 2);
+                glVertex3f(-length / 2, -length / 2, -length / 2);
+                glVertex3f(-length / 2, length / 2, -length / 2);
+                glVertex3f(length / 2, length / 2, -length / 2);
 
                 break;
 
@@ -263,20 +263,20 @@ public class FPCameraController {
             case 4:
                 glColor3f(1.0f, 0.0f, 0.0f);
 
-                glVertex3f(-lenght / 2, lenght / 2, lenght / 2);
-                glVertex3f(-lenght / 2, lenght / 2, -lenght / 2);
-                glVertex3f(-lenght / 2, -lenght / 2, -lenght / 2);
-                glVertex3f(-lenght / 2, -lenght / 2, lenght / 2);
+                glVertex3f(-length / 2, length / 2, length / 2);
+                glVertex3f(-length / 2, length / 2, -length / 2);
+                glVertex3f(-length / 2, -length / 2, -length / 2);
+                glVertex3f(-length / 2, -length / 2, length / 2);
 
                 break;
-            //rigth
+            //right
             case 5:
                 glColor3f(1.0f, 0.0f, 1.0f);
 
-                glVertex3f(lenght / 2, lenght / 2, -lenght / 2);
-                glVertex3f(lenght / 2, lenght / 2, lenght / 2);
-                glVertex3f(lenght / 2, -lenght / 2, lenght / 2);
-                glVertex3f(lenght / 2, -lenght / 2, -lenght / 2);
+                glVertex3f(length / 2, length / 2, -length / 2);
+                glVertex3f(length / 2, length / 2, length / 2);
+                glVertex3f(length / 2, -length / 2, length / 2);
+                glVertex3f(length / 2, -length / 2, -length / 2);
 
                 break;
         }
