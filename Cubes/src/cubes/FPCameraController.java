@@ -30,7 +30,7 @@ public class FPCameraController {
     //the rotation around the X axis of the camera
     private float pitch = 0.0f;
     private Vector3Float me;
-
+    
     public FPCameraController(float x, float y, float z) {
         //instantiate position Vector3f to the x y z params.
         position = new Vector3Float(x, y, z);
@@ -99,6 +99,9 @@ public class FPCameraController {
 
     public void gameLoop() {
         FPCameraController camera = new FPCameraController(0, 0, 0);
+        
+        Chunk c = new Chunk(0,0,0);
+        
         float dx = 0.0f;
         float dy = 0.0f;
         float dt = 0.0f; //length of frame
@@ -157,7 +160,12 @@ public class FPCameraController {
             camera.lookThrough();
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             //you would draw your scene here.
-            render();
+            //render();
+            
+            //
+            c.render();
+            
+            //
             //draw the buffer to the screen
             Display.update();
             Display.sync(60);
