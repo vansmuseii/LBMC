@@ -100,7 +100,7 @@ public class FPCameraController {
     }
 
     public void gameLoop() {
-        FPCameraController camera = new FPCameraController(-20,-25,-25);
+        FPCameraController camera = new FPCameraController(0.0f,-50.0f,-50.0f);
         
         Chunk c = new Chunk(0,0,0);
         
