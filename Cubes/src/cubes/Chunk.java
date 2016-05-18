@@ -18,14 +18,13 @@ public class Chunk {
 
     static final int CHUNK_SIZE = 30;
     static final int CUBE_LENGTH = 2;
-    final int MIN_HEIGHT = 8;
     private Block[][][] Blocks;
     private int VBOVertexHandle;
     private int VBOColorHandle;
     private int VBOTextureHandle;
     private int StartX, StartY, StartZ;
     private Random r;
-    private Texture text;
+    private Texture texture;
 
     public void render() {
         glPushMatrix();
@@ -41,7 +40,7 @@ public class Chunk {
     }
 
     public void rebuildMesh(float startX, float startY, float startZ) {
-        SimplexNoise noise = new SimplexNoise(30, 0.05, r.nextInt());
+        SimplexNoise noise = new SimplexNoise(60, 0.08, r.nextInt());
         int h;
         VBOColorHandle = glGenBuffers();
         VBOVertexHandle = glGenBuffers();
@@ -49,17 +48,13 @@ public class Chunk {
         FloatBuffer VertexPositionData = BufferUtils.createFloatBuffer((CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
         FloatBuffer VertexColorData = BufferUtils.createFloatBuffer((CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
         FloatBuffer VertexTextureData = BufferUtils.createFloatBuffer((CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
-
         for (float x = 0; x < CHUNK_SIZE; x ++) {
             for (float z = 0; z < CHUNK_SIZE; z++) {
                 h = Math.abs(StartY + (int) (100 * noise.getNoise((int) x, (int) z)) * CUBE_LENGTH);
-                h += MIN_HEIGHT;
-                h %= CHUNK_SIZE;
-                for (float y = 0; y < CHUNK_SIZE; y++) {
+                for (float y = 0; y <= h; y++) {
                     VertexPositionData.put(createCube((float) (startX + x * CUBE_LENGTH),
                             (float) (y * CUBE_LENGTH + (int) (CHUNK_SIZE * .8)),
                             (float) (startZ + z * CUBE_LENGTH)));
-
                     VertexColorData.put(createCubeVertexCol(getCubeColor(Blocks[(int) x][(int) y][(int) z])));
                     VertexTextureData.put(createTexCube((float) 0, (float) 0, Blocks[(int) (x)][(int) (y)][(int) (z)]));
                 }
@@ -137,7 +132,7 @@ public class Chunk {
 
     public Chunk(int startX, int startY, int startZ) {
         try {
-            text = TextureLoader.getTexture("PNG",
+            texture = TextureLoader.getTexture("PNG",
                     ResourceLoader.getResourceAsStream("terrain.png"));
         } catch (Exception e) {
             e.printStackTrace();
