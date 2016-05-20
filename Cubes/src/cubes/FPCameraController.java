@@ -5,7 +5,7 @@
  *      class: CS 445 - Computer Graphics
  *
  *      assignment: Quarter Project CP#1
- *      date last modified: 05/04/2016
+ *      date last modified: 05/20/2016
  *
  *      purpose: This program is to demonstrate how to use the LWGJL
  *              to move a cube.
@@ -24,7 +24,6 @@ import org.lwjgl.Sys;
 public class FPCameraController {
 
     private Vector3f position = null;
-    //private Vector3Float lPosition = null;
     //the rotation around the Y axis of the camera
     private float yaw = 0.0f;
     //the rotation around the X axis of the camera
@@ -35,11 +34,6 @@ public class FPCameraController {
     public FPCameraController(float x, float y, float z) {
         //instantiate position Vector3f to the x y z params.
         position = new Vector3f(x, y, z);
-//        chunk = new Chunk((int) x, (int) y, (int) z);
-//        lPosition = new Vector3Float(x, y, z);
-//        lPosition.x = 0f;
-//        lPosition.y = 15f;
-//        lPosition.z = 0f;
     }
 
     public void yaw(float amount) {

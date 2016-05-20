@@ -1,7 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * *********************************************************************
+ *      file: Chunk.java
+ *      author: Frank Lapena, Chun Ho, Van Muse
+ *      class: CS 445 - Computer Graphics
+ *
+ *      assignment: Quarter Project CP#1
+ *      date last modified: 05/20/2016
+ *
+ *      purpose: This class creates the textures of the blocks.
+ *
+ **********************************************************************
  */
 package cubes;
 
@@ -119,14 +127,6 @@ public class Chunk {
     }
 
     private float[] getCubeColor(Block block) {
-//        switch (block.GetID()) {
-//            case 1:
-//                return new float[]{0, 1, 0};
-//            case 2:
-//                return new float[]{1, 0.5f, 0};
-//            case 3:
-//                return new float[]{0, 0f, 1f};
-//        }
         return new float[]{1, 1, 1};
     }
 
