@@ -24,7 +24,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class Chunk {
 
-    static final int CHUNK_SIZE = 30;
+    static final int CHUNK_SIZE = 32;
     static final int CUBE_LENGTH = 2;
     private Block[][][] Blocks;
     private int VBOVertexHandle;
@@ -58,8 +58,14 @@ public class Chunk {
         FloatBuffer VertexTextureData = BufferUtils.createFloatBuffer((CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
         for (float x = 0; x < CHUNK_SIZE; x ++) {
             for (float z = 0; z < CHUNK_SIZE; z++) {
-                h = Math.abs(StartY + (int) (100 * noise.getNoise((int) x, (int) z)) * CUBE_LENGTH);
+                h = Math.abs(StartY + (int) (150 * noise.getNoise((int) x, (int) z)) * CUBE_LENGTH);
                 for (float y = 0; y <= h; y++) {
+                    
+                    if(y == h && y != 0){
+                        Blocks[(int)x][h][(int)z] = new Block(Block.BlockType.BlockType_Grass);
+                    }
+                    
+                    
                     VertexPositionData.put(createCube((float) (startX + x * CUBE_LENGTH),
                             (float) (y * CUBE_LENGTH + (int) (CHUNK_SIZE * .8)),
                             (float) (startZ + z * CUBE_LENGTH)));
@@ -143,21 +149,41 @@ public class Chunk {
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int y = 0; y < CHUNK_SIZE; y++) {
                 for (int z = 0; z < CHUNK_SIZE; z++) {
-                    if (r.nextFloat() > 0.7f) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
-                    } else if (r.nextFloat() > 0.5f) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Sand);
-                    } else if (r.nextFloat() > 0.3f) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Water);
-                    } else if (r.nextFloat() > 0.2f) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Stone);
-                    } else if (r.nextFloat() > 0.1f) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);    
-                    } else if (r.nextFloat() > 0.0f) {
+                    
+                    
+//                     if(y == 3){
+//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
+//                        
+//                    }else
+                         if(y == 0){
                         Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Bedrock);
-
-                        //Need default block
-                    } else {
+                    }
+//                    else if (y < 3){
+//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);
+//
+//                    }
+                    
+                    
+                    
+//                    else if (r.nextFloat() > 0.7f) {
+//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
+//                    } else if (r.nextFloat() > 0.6f) {
+//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Wood);   
+//                   
+//                    } else if (r.nextFloat() > 0.5f) {
+//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Sand);
+//                    } else if (r.nextFloat() > 0.3f) {
+//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Water);
+//                    } else if (r.nextFloat() > 0.2f) {
+//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Stone);
+//                    } else if (r.nextFloat() > 0.1f) {
+//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);    
+//                    } else if (r.nextFloat() > 0.0f) {
+//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Bedrock);
+//
+//                        //Need default block
+//                    }
+                    else {
                         Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);
                     }
                 }
@@ -372,6 +398,70 @@ public class Chunk {
                     x + offset * 1, y + offset * 2,
                     x + offset * 1, y + offset * 1,
                     x + offset * 2, y + offset * 1};
+            case 6: //Wood
+                return new float[]{
+                    // BOTTOM QUAD(DOWN=+Y)
+                    x + offset * 6, y + offset * 2,
+                    x + offset * 5, y + offset * 2,
+                    x + offset * 5, y + offset * 1,
+                    x + offset * 6, y + offset * 1,
+                    // TOP
+                    x + offset * 6, y + offset * 2,
+                    x + offset * 5, y + offset * 2,
+                    x + offset * 5, y + offset * 1,
+                    x + offset * 6, y + offset * 1,
+                    // FRONT QUAD
+                    x + offset * 5, y + offset * 2,
+                    x + offset * 4, y + offset * 2,
+                    x + offset * 4, y + offset * 1,
+                    x + offset * 5, y + offset * 1,
+                    // BACK QUAD
+                    x + offset * 5, y + offset * 2,
+                    x + offset * 4, y + offset * 2,
+                    x + offset * 4, y + offset * 1,
+                    x + offset * 5, y + offset * 1,
+                    // LEFT QUAD
+                    x + offset * 5, y + offset * 2,
+                    x + offset * 4, y + offset * 2,
+                    x + offset * 4, y + offset * 1,
+                    x + offset * 5, y + offset * 1,
+                    // RIGHT QUAD
+                    x + offset * 5, y + offset * 2,
+                    x + offset * 4, y + offset * 2,
+                    x + offset * 4, y + offset * 1,
+                    x + offset * 5, y + offset * 1};
+//            case 7: //Leaves
+//                return new float[]{
+//                    // BOTTOM QUAD(DOWN=+Y)
+//                    x + offset * 2, y + offset * 2,
+//                    x + offset * 1, y + offset * 2,
+//                    x + offset * 1, y + offset * 1,
+//                    x + offset * 2, y + offset * 1,
+//                    // TOP
+//                    x + offset * 2, y + offset * 2,
+//                    x + offset * 1, y + offset * 2,
+//                    x + offset * 1, y + offset * 1,
+//                    x + offset * 2, y + offset * 1,
+//                    // FRONT QUAD
+//                    x + offset * 2, y + offset * 2,
+//                    x + offset * 1, y + offset * 2,
+//                    x + offset * 1, y + offset * 1,
+//                    x + offset * 2, y + offset * 1,
+//                    // BACK QUAD
+//                    x + offset * 2, y + offset * 2,
+//                    x + offset * 1, y + offset * 2,
+//                    x + offset * 1, y + offset * 1,
+//                    x + offset * 2, y + offset * 1,
+//                    // LEFT QUAD
+//                    x + offset * 2, y + offset * 2,
+//                    x + offset * 1, y + offset * 2,
+//                    x + offset * 1, y + offset * 1,
+//                    x + offset * 2, y + offset * 1,
+//                    // RIGHT QUAD
+//                    x + offset * 2, y + offset * 2,
+//                    x + offset * 1, y + offset * 2,
+//                    x + offset * 1, y + offset * 1,
+//                    x + offset * 2, y + offset * 1};
         }
         return null;
     }
