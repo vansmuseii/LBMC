@@ -36,14 +36,14 @@ public class Chunk {
 
     public void render() {
         glPushMatrix();
-            glBindBuffer(GL_ARRAY_BUFFER, VBOVertexHandle);
-            glVertexPointer(3, GL_FLOAT, 0, 0L);
-            glBindBuffer(GL_ARRAY_BUFFER, VBOColorHandle);
-            glColorPointer(3, GL_FLOAT, 0, 0L);
-            glBindBuffer(GL_ARRAY_BUFFER, VBOTextureHandle);
-            glBindTexture(GL_TEXTURE_2D, 1);
-            glTexCoordPointer(2, GL_FLOAT, 0, 0L);
-            glDrawArrays(GL_QUADS, 0, CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE * 24);
+        glBindBuffer(GL_ARRAY_BUFFER, VBOVertexHandle);
+        glVertexPointer(3, GL_FLOAT, 0, 0L);
+        glBindBuffer(GL_ARRAY_BUFFER, VBOColorHandle);
+        glColorPointer(3, GL_FLOAT, 0, 0L);
+        glBindBuffer(GL_ARRAY_BUFFER, VBOTextureHandle);
+        glBindTexture(GL_TEXTURE_2D, 1);
+        glTexCoordPointer(2, GL_FLOAT, 0, 0L);
+        glDrawArrays(GL_QUADS, 0, CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE * 24);
         glPopMatrix();
     }
 
@@ -56,16 +56,65 @@ public class Chunk {
         FloatBuffer VertexPositionData = BufferUtils.createFloatBuffer((CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
         FloatBuffer VertexColorData = BufferUtils.createFloatBuffer((CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
         FloatBuffer VertexTextureData = BufferUtils.createFloatBuffer((CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
-        for (float x = 0; x < CHUNK_SIZE; x ++) {
+        for (float x = 0; x < CHUNK_SIZE; x++) {
             for (float z = 0; z < CHUNK_SIZE; z++) {
                 h = Math.abs(StartY + (int) (150 * noise.getNoise((int) x, (int) z)) * CUBE_LENGTH);
                 for (float y = 0; y <= h; y++) {
-                    
-                    if(y == h && y != 0){
-                        Blocks[(int)x][h][(int)z] = new Block(Block.BlockType.BlockType_Grass);
+
+                    //Generate River
+                    if (y == 0) {
+                        Blocks[(int) x][h + 1][(int) z] = new Block(Block.BlockType.BlockType_Water);
+                        Blocks[(int) x][h + 2][(int) z] = new Block(Block.BlockType.BlockType_Water);
+
+                        VertexPositionData.put(createCube((float) (startX + x * CUBE_LENGTH),
+                                (float) (y + 1 * CUBE_LENGTH + (int) (CHUNK_SIZE * .8)),
+                                (float) (startZ + z * CUBE_LENGTH)));
+                        VertexColorData.put(createCubeVertexCol(getCubeColor(Blocks[(int) x][(int) y + 1][(int) z])));
+                        VertexTextureData.put(createTexCube((float) 0, (float) 0, Blocks[(int) (x)][(int) (y + 1)][(int) (z)]));
+
+                        VertexPositionData.put(createCube((float) (startX + x * CUBE_LENGTH),
+                                (float) (y + 2 * CUBE_LENGTH + (int) (CHUNK_SIZE * .8)),
+                                (float) (startZ + z * CUBE_LENGTH)));
+                        VertexColorData.put(createCubeVertexCol(getCubeColor(Blocks[(int) x][(int) y + 2][(int) z])));
+                        VertexTextureData.put(createTexCube((float) 0, (float) 0, Blocks[(int) (x)][(int) (y + 2)][(int) (z)]));
+
+                        //Generate Sand around water
+                        if (x > 0 && Blocks[(int)x][(int)y+2][(int)z].GetID() == 2) {
+                            if (Blocks[(int) x - 1][(int)y + 2][(int) z].GetID() != 2) {
+                                Blocks[(int) x - 1][(int)y + 1][(int) z] = new Block(Block.BlockType.BlockType_Sand);
+                                Blocks[(int) x - 1][(int)y + 2][(int) z] = new Block(Block.BlockType.BlockType_Sand);
+
+                            }
+                        }
+
+                        if (x < CHUNK_SIZE - 1 && Blocks[(int)x][(int)y+2][(int)z].GetID() == 2) {
+                            if (Blocks[(int) x + 1][(int)y + 2][(int) z].GetID() != 2) {
+                                Blocks[(int) x + 1][(int)y + 1][(int) z] = new Block(Block.BlockType.BlockType_Sand);
+                                Blocks[(int) x + 1][(int)y + 2][(int) z] = new Block(Block.BlockType.BlockType_Sand);
+
+                            }
+                        }
+                        if (z > 0 && Blocks[(int)x][(int)y+2][(int)z].GetID() == 2) {
+                            if (Blocks[(int) x][(int)y + 2][(int) z - 1].GetID() != 2) {
+                                Blocks[(int) x][(int)y + 1][(int) z - 1] = new Block(Block.BlockType.BlockType_Sand);
+                                Blocks[(int) x][(int)y + 2][(int) z - 1] = new Block(Block.BlockType.BlockType_Sand);
+
+                            }
+                        }
+                        if (z < CHUNK_SIZE - 1 && Blocks[(int)x][(int)y+2][(int)z].GetID() == 2) {
+                            if (Blocks[(int) x][(int)y + 2][(int) z + 1].GetID() != 2) {
+                                Blocks[(int) x][(int)y + 1][(int) z + 1] = new Block(Block.BlockType.BlockType_Sand);
+                                Blocks[(int) x][(int)y + 2][(int) z + 1] = new Block(Block.BlockType.BlockType_Sand);
+
+                            }
+                        }
                     }
-                    
-                    
+
+                    //Generate Grass on general top
+                    if (y == h && y != 0) {
+                        Blocks[(int) x][h][(int) z] = new Block(Block.BlockType.BlockType_Grass);
+                    }
+
                     VertexPositionData.put(createCube((float) (startX + x * CUBE_LENGTH),
                             (float) (y * CUBE_LENGTH + (int) (CHUNK_SIZE * .8)),
                             (float) (startZ + z * CUBE_LENGTH)));
@@ -149,40 +198,35 @@ public class Chunk {
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int y = 0; y < CHUNK_SIZE; y++) {
                 for (int z = 0; z < CHUNK_SIZE; z++) {
-                    
-                    
+
 //                     if(y == 3){
 //                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
 //                        
 //                    }else
-                         if(y == 0){
+                    if (y == 0) {
                         Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Bedrock);
-                    }
-//                    else if (y < 3){
-//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);
-//
-//                    }
-                    
-                    
-                    
-//                    else if (r.nextFloat() > 0.7f) {
-//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
-//                    } else if (r.nextFloat() > 0.6f) {
-//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Wood);   
-//                   
-//                    } else if (r.nextFloat() > 0.5f) {
-//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Sand);
-//                    } else if (r.nextFloat() > 0.3f) {
-//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Water);
-//                    } else if (r.nextFloat() > 0.2f) {
-//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Stone);
-//                    } else if (r.nextFloat() > 0.1f) {
-//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);    
-//                    } else if (r.nextFloat() > 0.0f) {
-//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Bedrock);
-//
-//                        //Need default block
-//                    }
+                    } //                    else if (y < 3){
+                    //                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);
+                    //
+                    //                    }
+                    //                    else if (r.nextFloat() > 0.7f) {
+                    //                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
+                    //                    } else if (r.nextFloat() > 0.6f) {
+                    //                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Wood);   
+                    //                   
+                    //                    } else if (r.nextFloat() > 0.5f) {
+                    //                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Sand);
+                    //                    } else if (r.nextFloat() > 0.3f) {
+                    //                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Water);
+                    //                    } else if (r.nextFloat() > 0.2f) {
+                    //                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Stone);
+                    //                    } else if (r.nextFloat() > 0.1f) {
+                    //                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);    
+                    //                    } else if (r.nextFloat() > 0.0f) {
+                    //                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Bedrock);
+                    //
+                    //                        //Need default block
+                    //                    }
                     else {
                         Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);
                     }
@@ -195,12 +239,28 @@ public class Chunk {
         StartX = startX;
         StartY = startY;
         StartZ = startZ;
+
         rebuildMesh(startX, startY, startZ);
+
+//        for(int i = 0; i < CHUNK_SIZE; i++){
+//            for(int j = 0; j < 1; j++){
+//                for(int k = 0; k < CHUNK_SIZE; k++){
+//                    
+//                    if(Blocks[i][j][k].GetID() == 5){
+//                                            System.out.println(Blocks[i][j+1][k].GetID());
+//                        if(Blocks[i][j+1][k].GetID() != 3 && Blocks[i][j+1][k].GetID() != 0){
+//                            Blocks[i][j+1][k] = new Block(Block.BlockType.BlockType_Water);
+//                        }
+//                    }
+//                    //System.out.println(Blocks[i][j][k].GetID());
+//                }
+//            }
+//        }
     }
 
     public static float[] createTexCube(float x, float y, Block block) {
         float offset = (1024f / 16) / 1024f;
-        
+
         switch (block.GetID()) {
             case 0: //Grass
                 return new float[]{

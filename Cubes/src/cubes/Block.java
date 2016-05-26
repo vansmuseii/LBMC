@@ -17,7 +17,11 @@ public class Block {
         BlockType_Water(2),
         BlockType_Dirt(3),
         BlockType_Stone(4),
-        BlockType_Bedrock(5);
+        BlockType_Bedrock(5),
+        
+        BlockType_Wood(6),
+        BlockType_Leaves(7);
+        
         private int BlockID;
 
         BlockType(int i) {
