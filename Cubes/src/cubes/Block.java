@@ -20,7 +20,8 @@ public class Block {
         BlockType_Bedrock(5),
         
         BlockType_Wood(6),
-        BlockType_Leaves(7);
+        BlockType_WoodLeave(7),
+        BlockType_Leaves(8);
         
         private int BlockID;
 

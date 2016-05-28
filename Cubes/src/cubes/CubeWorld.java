@@ -48,7 +48,7 @@ public class CubeWorld {
             }
         }
         Display.setDisplayMode(displayMode);
-        Display.setTitle("Hey Mom! I am using”+“OpenGL!!!");
+        Display.setTitle("Low Budget Minecraft");
         Display.create();
     }
 

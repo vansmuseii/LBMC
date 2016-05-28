@@ -61,11 +61,74 @@ public class Chunk {
                 h = Math.abs(StartY + (int) (100 * noise.getNoise((int) x, (int) z)) * CUBE_LENGTH);
 
                 for (float y = 0; y <= h; y++) {
-
                     //Generate Grass on general top
                     if (y == h && y != 0) {
                         Blocks[(int) x][h][(int) z] = new Block(Block.BlockType.BlockType_Grass);
                         Blocks[(int) x][(int) y][(int) z].SetActive(true);
+                        
+                        
+                        //Generate Tree
+                        int WoodLeafHeight;
+                        if (r.nextFloat() > 0.95f) {
+                            WoodLeafHeight = (int)y + r.nextInt(5) + 4;
+                            for (int k = (int) y + 1; k < WoodLeafHeight; k++) {
+                                Blocks[(int) x][k][(int) z] = new Block(Block.BlockType.BlockType_Wood);
+
+                                Blocks[(int) x][k][(int) z].SetActive(true);
+                                VertexPositionData.put(createCube((float) (startX + x * CUBE_LENGTH),
+                                        (float) (k * CUBE_LENGTH + (int) (CHUNK_SIZE * .8)),
+                                        (float) (startZ + z * CUBE_LENGTH)));
+                                VertexColorData.put(createCubeVertexCol(getCubeColor(Blocks[(int) x][(int) k][(int) z])));
+                                VertexTextureData.put(createTexCube((float) 0, (float) 0, Blocks[(int) x][k][(int) z]));
+                            }
+                            
+                            //Generate Wood leaves
+                            Blocks[(int) x][WoodLeafHeight][(int) z] = new Block(Block.BlockType.BlockType_WoodLeave);
+
+                            Blocks[(int) x][WoodLeafHeight][(int) z].SetActive(true);
+                            VertexPositionData.put(createCube((float) (startX + x * CUBE_LENGTH),
+                                    (float) (WoodLeafHeight * CUBE_LENGTH + (int) (CHUNK_SIZE * .8)),
+                                    (float) (startZ + z * CUBE_LENGTH)));
+                            VertexColorData.put(createCubeVertexCol(getCubeColor(Blocks[(int) x][WoodLeafHeight][(int) z])));
+                            VertexTextureData.put(createTexCube((float) 0, (float) 0, Blocks[(int) x][WoodLeafHeight][(int) z]));
+                            
+                            //Generate Leaves
+                            for(int a = (int)x - 1; a <= (int)x + 1; a++){
+                                for(int b = WoodLeafHeight - 1; b <= WoodLeafHeight + 1; b++){
+                                    for(int c = (int)z - 1; c <= (int)z + 1; c++){
+                                        
+                                        if(a >= 0 && a < CHUNK_SIZE && c >= 0 && c < CHUNK_SIZE && b < CHUNK_SIZE){
+                                            
+                                            if (!Blocks[a][b][c].IsActive()) {
+                                                Blocks[a][b][c] = new Block(Block.BlockType.BlockType_Leaves);
+
+                                                Blocks[a][b][c].SetActive(true);
+                                                VertexPositionData.put(createCube((float) (startX + a * CUBE_LENGTH),
+                                                        (float) (b * CUBE_LENGTH + (int) (CHUNK_SIZE * .8)),
+                                                        (float) (startZ + c * CUBE_LENGTH)));
+                                                VertexColorData.put(createCubeVertexCol(getCubeColor(Blocks[a][b][c])));
+                                                VertexTextureData.put(createTexCube((float) 0, (float) 0, Blocks[a][b][c]));
+                                            }
+                                            
+                                        }
+                                        
+                                        
+                                        
+                                    }
+                                }
+                            }
+                            
+                            
+                            
+                                                   
+                            
+                            
+                        }
+                        
+                        
+                        
+                        
+                        
 
                         //Generate Sand
                         if (y == 2) {
@@ -430,38 +493,70 @@ public class Chunk {
                     x + offset * 4, y + offset * 2,
                     x + offset * 4, y + offset * 1,
                     x + offset * 5, y + offset * 1};
-//            case 7: //Leaves
-//                return new float[]{
-//                    // BOTTOM QUAD(DOWN=+Y)
-//                    x + offset * 2, y + offset * 2,
-//                    x + offset * 1, y + offset * 2,
-//                    x + offset * 1, y + offset * 1,
-//                    x + offset * 2, y + offset * 1,
-//                    // TOP
-//                    x + offset * 2, y + offset * 2,
-//                    x + offset * 1, y + offset * 2,
-//                    x + offset * 1, y + offset * 1,
-//                    x + offset * 2, y + offset * 1,
-//                    // FRONT QUAD
-//                    x + offset * 2, y + offset * 2,
-//                    x + offset * 1, y + offset * 2,
-//                    x + offset * 1, y + offset * 1,
-//                    x + offset * 2, y + offset * 1,
-//                    // BACK QUAD
-//                    x + offset * 2, y + offset * 2,
-//                    x + offset * 1, y + offset * 2,
-//                    x + offset * 1, y + offset * 1,
-//                    x + offset * 2, y + offset * 1,
-//                    // LEFT QUAD
-//                    x + offset * 2, y + offset * 2,
-//                    x + offset * 1, y + offset * 2,
-//                    x + offset * 1, y + offset * 1,
-//                    x + offset * 2, y + offset * 1,
-//                    // RIGHT QUAD
-//                    x + offset * 2, y + offset * 2,
-//                    x + offset * 1, y + offset * 2,
-//                    x + offset * 1, y + offset * 1,
-//                    x + offset * 2, y + offset * 1};
+              case 7: //Wood + Leaves
+                return new float[]{
+                    // BOTTOM QUAD(DOWN=+Y)
+                    x + offset * 6, y + offset * 2,
+                    x + offset * 5, y + offset * 2,
+                    x + offset * 5, y + offset * 1,
+                    x + offset * 6, y + offset * 1,
+                    // TOP
+                    x + offset * 6, y + offset * 2,
+                    x + offset * 5, y + offset * 2,
+                    x + offset * 5, y + offset * 1,
+                    x + offset * 6, y + offset * 1,
+                    // FRONT QUAD
+                    x + offset * 6, y + offset * 4,
+                    x + offset * 5, y + offset * 4,
+                    x + offset * 5, y + offset * 3,
+                    x + offset * 6, y + offset * 3,
+                    // BACK QUAD
+                    x + offset * 6, y + offset * 4,
+                    x + offset * 5, y + offset * 4,
+                    x + offset * 5, y + offset * 3,
+                    x + offset * 6, y + offset * 3,
+                    // LEFT QUAD
+                    x + offset * 6, y + offset * 4,
+                    x + offset * 5, y + offset * 4,
+                    x + offset * 5, y + offset * 3,
+                    x + offset * 6, y + offset * 3,
+                    // RIGHT QUAD
+                    x + offset * 6, y + offset * 4,
+                    x + offset * 5, y + offset * 4,
+                    x + offset * 5, y + offset * 3,
+                    x + offset * 6, y + offset * 3};
+            case 8: //Leaves
+                return new float[]{
+                    // BOTTOM QUAD(DOWN=+Y)
+                    x + offset * 5, y + offset * 4,
+                    x + offset * 4, y + offset * 4,
+                    x + offset * 4, y + offset * 3,
+                    x + offset * 5, y + offset * 3,
+                    // TOP
+                    x + offset * 5, y + offset * 4,
+                    x + offset * 4, y + offset * 4,
+                    x + offset * 4, y + offset * 3,
+                    x + offset * 5, y + offset * 3,
+                    // FRONT QUAD
+                    x + offset * 5, y + offset * 4,
+                    x + offset * 4, y + offset * 4,
+                    x + offset * 4, y + offset * 3,
+                    x + offset * 5, y + offset * 3,
+                    // BACK QUAD
+                    x + offset * 5, y + offset * 4,
+                    x + offset * 4, y + offset * 4,
+                    x + offset * 4, y + offset * 3,
+                    x + offset * 5, y + offset * 3,
+                    // LEFT QUAD
+                    x + offset * 5, y + offset * 4,
+                    x + offset * 4, y + offset * 4,
+                    x + offset * 4, y + offset * 3,
+                    x + offset * 5, y + offset * 3,
+                    // RIGHT QUAD
+                    x + offset * 5, y + offset * 4,
+                    x + offset * 4, y + offset * 4,
+                    x + offset * 4, y + offset * 3,
+                    x + offset * 5, y + offset * 3};
         }
         return null;
     }
