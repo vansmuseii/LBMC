@@ -106,7 +106,8 @@ public class FPCameraController {
     }
 
     public void DayNight(float counter){
-        lPosition = new Vector3f(0, (float)(90 * Math.cos(Math.toRadians(counter))), (float)(90 * Math.sin(Math.toRadians(counter))));
+        //lPosition = new Vector3f(0f, (float)(-30*Math.cos(Math.toRadians(counter))), (float)(-30* Math.sin(Math.toRadians(counter))));
+        lPosition = new Vector3f((float)(45*Math.cos(Math.toRadians(counter))), (float)(45* Math.sin(Math.toRadians(counter))), 45f);
     }
     
     
@@ -125,7 +126,7 @@ public class FPCameraController {
     }
 
     public void gameLoop() {
-        FPCameraController camera = new FPCameraController(0.0f, -50.0f, -50.0f);
+        FPCameraController camera = new FPCameraController(0f, -50f, -50f);
 
         Chunk c = new Chunk(0, 0, 0);
 
@@ -143,7 +144,7 @@ public class FPCameraController {
         // keep looping till the display window is closed the ESC key is down
         while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
             
-            counter +=0.1;
+            counter +=1;
             if (counter >= 360)
                 counter= 0;
             camera.DayNight(counter);                       
