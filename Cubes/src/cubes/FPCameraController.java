@@ -106,7 +106,7 @@ public class FPCameraController {
     }
 
     public void DayNight(float counter){
-        lPosition = new Vector3f(counter, counter, counter);
+        lPosition = new Vector3f(0, (float)(90 * Math.cos(Math.toRadians(counter))), (float)(90 * Math.sin(Math.toRadians(counter))));
     }
     
     
@@ -129,7 +129,7 @@ public class FPCameraController {
 
         Chunk c = new Chunk(0, 0, 0);
 
-        float counter = 16;
+        float counter = 0;
         float dx = 0.0f;
         float dy = 0.0f;
         float dt = 0.0f; //length of frame
@@ -143,13 +143,10 @@ public class FPCameraController {
         // keep looping till the display window is closed the ESC key is down
         while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
             
-            
-            if(counter > 90) counter = 0;
-            counter += 0.1;
-            camera.DayNight(counter);
-            
-            
-            
+            counter +=0.1;
+            if (counter >= 360)
+                counter= 0;
+            camera.DayNight(counter);                       
             
             time = Sys.getTime();
             lastTime = time;
