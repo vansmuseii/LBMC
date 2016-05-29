@@ -27,14 +27,12 @@ public class FPCameraController {
 
     private Vector3f position = null;
     private Vector3f lPosition = null;
-    private FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
     //the rotation around the Y axis of the camera
     private float yaw = 0.0f;
     //the rotation around the X axis of the camera
     private float pitch = 0.0f;
     private Vector3Float me;
-    
-    
+
     public FPCameraController(float x, float y, float z) {
         //instantiate position Vector3f to the x y z params.
         position = new Vector3f(x, y, z);
@@ -57,9 +55,10 @@ public class FPCameraController {
         float zOffset = distance * (float) Math.cos(Math.toRadians(yaw));
         position.x -= xOffset;
         position.z += zOffset;
-        
-        lightPosition.put(lPosition.x-=xOffset).put(
-                          lPosition.y).put(lPosition.z+=zOffset).put(1.0f).flip();
+
+        FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
+        lightPosition.put(lPosition.x -= xOffset).put(
+                lPosition.y).put(lPosition.z += zOffset).put(1.0f).flip();
         glLight(GL_LIGHT0, GL_POSITION, lightPosition);
     }
 
@@ -68,9 +67,10 @@ public class FPCameraController {
         float zOffset = distance * (float) Math.cos(Math.toRadians(yaw));
         position.x += xOffset;
         position.z -= zOffset;
-       
-        lightPosition.put(lPosition.x-=xOffset).put(
-                          lPosition.y).put(lPosition.z+=zOffset).put(1.0f).flip();
+
+        FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
+        lightPosition.put(lPosition.x -= xOffset).put(
+                lPosition.y).put(lPosition.z += zOffset).put(1.0f).flip();
         glLight(GL_LIGHT0, GL_POSITION, lightPosition);
     }
 
@@ -79,9 +79,9 @@ public class FPCameraController {
         float zOffset = distance * (float) Math.cos(Math.toRadians(yaw - 90));
         position.x -= xOffset;
         position.z += zOffset;
-        
-        lightPosition.put(lPosition.x-=xOffset).put(
-                          lPosition.y).put(lPosition.z+=zOffset).put(1.0f).flip();
+        FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
+        lightPosition.put(lPosition.x -= xOffset).put(
+                lPosition.y).put(lPosition.z += zOffset).put(1.0f).flip();
         glLight(GL_LIGHT0, GL_POSITION, lightPosition);
     }
 
@@ -90,9 +90,9 @@ public class FPCameraController {
         float zOffset = distance * (float) Math.cos(Math.toRadians(yaw + 90));
         position.x -= xOffset;
         position.z += zOffset;
-        
-        lightPosition.put(lPosition.x-=xOffset).put(
-                          lPosition.y).put(lPosition.z+=zOffset).put(1.0f).flip();
+        FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
+        lightPosition.put(lPosition.x -= xOffset).put(
+                lPosition.y).put(lPosition.z += zOffset).put(1.0f).flip();
         glLight(GL_LIGHT0, GL_POSITION, lightPosition);
     }
 
@@ -112,15 +112,18 @@ public class FPCameraController {
         glRotatef(yaw, 0.0f, 1.0f, 0.0f);
         //translate to the position vector's location
         glTranslatef(position.x, position.y, position.z);
-        
-       
+        FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
+        lightPosition.put(lPosition.x).put(
+                lPosition.y).put(lPosition.z).put(1.0f).flip();
+        glLight(GL_LIGHT0, GL_POSITION, lightPosition);
+
     }
 
     public void gameLoop() {
-        FPCameraController camera = new FPCameraController(0.0f,-50.0f,-50.0f);
-        
-        Chunk c = new Chunk(0,0,0);
-        
+        FPCameraController camera = new FPCameraController(0.0f, -50.0f, -50.0f);
+
+        Chunk c = new Chunk(0, 0, 0);
+
         float dx = 0.0f;
         float dy = 0.0f;
         float dt = 0.0f; //length of frame
@@ -180,10 +183,10 @@ public class FPCameraController {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             //you would draw your scene here.
             //render();
-            
+
             //
             c.render();
-            
+
             //
             //draw the buffer to the screen
             Display.update();
