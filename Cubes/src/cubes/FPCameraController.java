@@ -4,11 +4,13 @@
  *      author: Frank Lapena, Chun Ho, Van Muse
  *      class: CS 445 - Computer Graphics
  *
- *      assignment: Quarter Project CP#1
- *      date last modified: 05/20/2016
+ *      assignment: Final Project
+ *      date last modified: 06/1/2016
  *
  *      purpose: This program is to demonstrate how to use the LWGJL
- *              to move a cube.
+ *              to move a create a Minecraft game.
+ *              Added turn on day and night (0) as well as turn off day
+ *              and night (9).
  *
  **********************************************************************
  */

@@ -4,10 +4,11 @@
  *      author: Frank Lapena, Chun Ho, Van Muse
  *      class: CS 445 - Computer Graphics
  *
- *      assignment: Quarter Project CP#1
- *      date last modified: 05/20/2016
+ *      assignment: Final Project
+ *      date last modified: 06/1/2016
  *
  *      purpose: This class creates the textures of the blocks.
+ *      added necessary requirements, as well as trees, sand, river
  *
  **********************************************************************
  */

@@ -4,7 +4,7 @@
  *      author: Frank Lapena, Chun Ho, Van Muse
  *      class: CS 445 - Computer Graphics
  *
- *      assignment: Quarter Project CP#1
+ *      assignment: Final Project
  *      date last modified: 05/04/2016
  *
  *      purpose: This program is to demonstrate how to use the LWGJL
