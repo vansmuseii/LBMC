@@ -108,42 +108,24 @@ public class Chunk {
                                                         (float) (startZ + c * CUBE_LENGTH)));
                                                 VertexColorData.put(createCubeVertexCol(getCubeColor(Blocks[a][b][c])));
                                                 VertexTextureData.put(createTexCube((float) 0, (float) 0, Blocks[a][b][c]));
-                                            }
-                                            
+                                            }                                            
                                         }
-                                        
-                                        
-                                        
                                     }
                                 }
                             }
-                            
-                            
-                            
-                                                   
-                            
-                            
                         }
-                        
-                        
-                        
-                        
-                        
-
                         //Generate Sand
                         if (y == 2) {
                             Blocks[(int) x][2][(int) z] = new Block(Block.BlockType.BlockType_Sand);
                             Blocks[(int) x][(int) y][(int) z].SetActive(true);
                         }
                     }
-
                     VertexPositionData.put(createCube((float) (startX + x * CUBE_LENGTH),
                             (float) (y * CUBE_LENGTH + (int) (CHUNK_SIZE * .8)),
                             (float) (startZ + z * CUBE_LENGTH)));
                     VertexColorData.put(createCubeVertexCol(getCubeColor(Blocks[(int) x][(int) y][(int) z])));
                     VertexTextureData.put(createTexCube((float) 0, (float) 0, Blocks[(int) (x)][(int) (y)][(int) (z)]));
                 }
-
                 //Generate water
                 if (!Blocks[(int) x][1][(int) z].IsActive()) {
 

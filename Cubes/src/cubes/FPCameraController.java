@@ -32,11 +32,11 @@ public class FPCameraController {
     //the rotation around the X axis of the camera
     private float pitch = 0.0f;
     private Vector3Float me;
-
+    FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
     public FPCameraController(float x, float y, float z) {
         //instantiate position Vector3f to the x y z params.
         position = new Vector3f(x, y, z);
-        lPosition = new Vector3f(0, 16, 16);
+        lPosition = new Vector3f(0f,16f,16f);
     }
 
     public void yaw(float amount) {
@@ -56,7 +56,6 @@ public class FPCameraController {
         position.x -= xOffset;
         position.z += zOffset;
 
-        FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
         lightPosition.put(lPosition.x -= xOffset).put(
                 lPosition.y).put(lPosition.z += zOffset).put(1.0f).flip();
         glLight(GL_LIGHT0, GL_POSITION, lightPosition);
@@ -68,7 +67,6 @@ public class FPCameraController {
         position.x += xOffset;
         position.z -= zOffset;
 
-        FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
         lightPosition.put(lPosition.x += xOffset).put(
                 lPosition.y).put(lPosition.z -= zOffset).put(1.0f).flip();
         glLight(GL_LIGHT0, GL_POSITION, lightPosition);
@@ -79,7 +77,6 @@ public class FPCameraController {
         float zOffset = distance * (float) Math.cos(Math.toRadians(yaw - 90));
         position.x -= xOffset;
         position.z += zOffset;
-        FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
         lightPosition.put(lPosition.x -= xOffset).put(
                 lPosition.y).put(lPosition.z += zOffset).put(1.0f).flip();
         glLight(GL_LIGHT0, GL_POSITION, lightPosition);
@@ -90,7 +87,6 @@ public class FPCameraController {
         float zOffset = distance * (float) Math.cos(Math.toRadians(yaw + 90));
         position.x -= xOffset;
         position.z += zOffset;
-        FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
         lightPosition.put(lPosition.x -= xOffset).put(
                 lPosition.y).put(lPosition.z += zOffset).put(1.0f).flip();
         glLight(GL_LIGHT0, GL_POSITION, lightPosition);
@@ -117,7 +113,6 @@ public class FPCameraController {
         glRotatef(yaw, 0.0f, 1.0f, 0.0f);
         //translate to the position vector's location
         glTranslatef(position.x, position.y, position.z);
-        FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
         lightPosition.put(lPosition.x).put(
                 lPosition.y).put(lPosition.z).put(1.0f).flip();
         glLight(GL_LIGHT0, GL_POSITION, lightPosition);
@@ -144,22 +139,6 @@ public class FPCameraController {
 
         // keep looping till the display window is closed the ESC key is down
         while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-            
-            
-            if(Keyboard.isKeyDown(Keyboard.KEY_0)){
-                cycle = true;
-            }
-            
-            if (cycle) {
-                counter = (counter + 0.1f) % 360;
-                if (xval >= 500) {
-                    xval = -500;
-                }
-                xval++;
-                camera.DayNight(xval, counter);
-            }
-            
-            
             time = Sys.getTime();
             lastTime = time;
             //distance in mouse movement
@@ -199,7 +178,25 @@ public class FPCameraController {
             if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                 camera.moveDown(movementSpeed);
             }
-
+            // Press 0 to activate Day and Night Rotation
+            if(Keyboard.isKeyDown(Keyboard.KEY_0)){
+                cycle = true;
+            }
+            
+            // This will implement the cycle by going around a circle
+            if (cycle) {
+                counter = (counter + 0.1f) % 360;
+                if (xval >= 500) {
+                    xval = -500;
+                }
+                xval++;
+                camera.DayNight(xval, counter);
+            }
+            // Press 9 to turn off Day and Night
+            if(Keyboard.isKeyDown(Keyboard.KEY_9)){
+                cycle = false;
+                camera.lPosition= new Vector3f(0f, 16f, 16f);
+            }
             //set the modelview matrix back to the identity
             glLoadIdentity();
             //look through the camera before you draw anything
@@ -207,10 +204,7 @@ public class FPCameraController {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             //you would draw your scene here.
             //render();
-
-            //
             c.render();
-
             //
             //draw the buffer to the screen
             Display.update();
